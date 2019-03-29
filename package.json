@@ -1,0 +1,36 @@
+{
+  "name": "libelula-back",
+  "version": "1.0.0",
+  "description": "Libelula is a SCRUM tool for developers and supervisors",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertomlsoares/libelula-back.git"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "npm test"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/robertomlsoares/libelula-back/issues"
+  },
+  "homepage": "https://github.com/robertomlsoares/libelula-back#readme",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.0.16",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
