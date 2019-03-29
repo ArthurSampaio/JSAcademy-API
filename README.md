@@ -13,13 +13,13 @@ Before start coding, create a branch for what you're going to do so you can crea
 `git checkout -b <name-of-branch>`
 After you finish your work, commit everything and then merge with the master branch so you can resolve merge conflicts before creating the pull request.
 
-`git commit -m <message>`
-`git fetch origin master`
-`git merge origin master`
+- `git commit -m <message>`
+- `git fetch origin master`
+- `git merge origin master`
 
 Commit again and then push to **your** branch:
 
-`git commit -m <message>`
-`git push origin <name-of-branch>`
+- `git commit -m <message>`
+- `git push origin <name-of-branch>`
 
 Now go to GitHub and create the pull request. Wait for someone to approve your changes before merging with the master branch.
