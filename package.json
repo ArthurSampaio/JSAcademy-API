@@ -1,11 +1,11 @@
 {
-  "name": "libelula-back",
+  "name": "JS Academy - API",
   "version": "1.0.0",
-  "description": "Libelula is a SCRUM tool for developers and supervisors",
+  "description": "JS Academy is a platform that learn you the authentic Javascript",
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robertomlsoares/libelula-back.git"
+    "url": "git+https://github.com/ArthurSampaio/JSSchool-API.git"
   },
   "scripts": {
     "start": "node app.js",
@@ -13,9 +13,9 @@
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/robertomlsoares/libelula-back/issues"
+    "url": "https://github.com/ArthurSampaio/JSSchool-API/issues"
   },
-  "homepage": "https://github.com/robertomlsoares/libelula-back#readme",
+  "homepage": "https://github.com/ArthurSampaio/JSSchool-API#readme",
   "dependencies": {
     "bcrypt": "^2.0.1",
     "cors": "^2.8.4",
