@@ -1,5 +1,7 @@
 # JS School
 
+![JS Academy](images/jsacademy.png)
+
 ## Development
 
 Make sure you have [Node](https://nodejs.org) version 9.x and [MongoDB](https://docs.mongodb.com/manual/administration/install-community/) version 3.x installed.
