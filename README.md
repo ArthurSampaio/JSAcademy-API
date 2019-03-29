@@ -1,6 +1,4 @@
-# Libelula: Agile Development :computer:	:zap:
-
-Libelula is a SCRUM tool for developers and supervisors!
+# JS School
 
 ## Development
 
