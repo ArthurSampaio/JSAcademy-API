@@ -6,10 +6,8 @@
 
     var tokenRouter = require('../router/tokenRouter');
     var userRouter = require('../router/userRouter');
-    var organizationRouter = require('../router/organizationRouter');
-    var teamRouter = require('../router/teamRouter');
-    var backlogRouter = require('../router/backlogRouter');
-    var sprintRouter = require('../router/sprintRouter');
+    //var teamRouter = require('../router/teamRouter');
+
 
     var routesMiddleware = {};
 
