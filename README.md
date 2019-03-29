@@ -23,3 +23,6 @@ Commit again and then push to **your** branch:
 - `git push origin <name-of-branch>`
 
 Now go to GitHub and create the pull request. Wait for someone to approve your changes before merging with the master branch.
+
+:loudspeaker: **Disclaimer:** This project it's part of my course completion work.
+![Compucao Logo](images/marca_computacao_ufcg_vertical_producao.jpg)
