@@ -20,7 +20,8 @@
     },
     tasks: [{
       type: Schema.Types.ObjectId,
-      ref: 'Lesson'
+      ref: 'Lesson',
+      default: []
     }]
   },
     {
