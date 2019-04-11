@@ -8,6 +8,7 @@
     var userRouter = require('../router/userRouter');
     //var teamRouter = require('../router/teamRouter');
     var moduleRouter = require('../router/moduleRouter');
+    var exerciseRouter = require('../router/exerciseRouter');
 
 
     var routesMiddleware = {};
@@ -20,6 +21,7 @@
         app.use('/api/token', tokenRouter);
         app.use('/api/user', userRouter);
         app.use('/api/module', moduleRouter);
+        app.use('/api/exercise', exerciseRouter);
         // app.use('/api/organization', passport.authenticate('jwt', { session: false }), organizationRouter);
         // teamRouter.use('/:teamId/backlog', backlogRouter);
         // teamRouter.use('/:teamId/sprint', sprintRouter);

@@ -3,7 +3,7 @@
 
   var mongoose = require('mongoose');
   var _ = require('../util/util');
-  var Module = mongoose.model('Exercise');
+  var Exercise = mongoose.model('Exercise');
 
   /**
    * Service that handles operations involving exercises.
@@ -16,7 +16,7 @@
 
     return rawExercises.then(function (ex) {
       if (!ex) {
-        throw Error("No modules founded.");
+        throw Error("No exercise founded.");
       }
       return raw ?
         rawExercises : _.map(ex, function (e) {
@@ -25,7 +25,7 @@
     });
   };
 
-  ExerciseService.getExercises = function (exerciseId, raw) {
+  ExerciseService.getExercise = function (exerciseId, raw) {
     var params = {
       _id: exerciseId
     };
@@ -33,7 +33,7 @@
     var rawExercise = Exercise.findOne(params).exec();
     return rawExercise.then(function (exc) {
       if (!exc) {
-        throw Error("There's no module with the given ID: " + moduleId);
+        throw Error("There's no exercise with the given ID: " + exerciseId);
       }
       return raw ? rawExercise : exc.toObject();
     });
