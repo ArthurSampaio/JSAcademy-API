@@ -13,6 +13,10 @@
       type: String,
       required: [true, 'A Module need has a description.']
     },
+    appraisedFunction: {
+      type: String,
+      default: `function(...args){  }`
+    },
     testCases: [{
       input: {
         type: String,

@@ -6,7 +6,7 @@
   var Module = mongoose.model('Module');
 
   /**
-   * Service that handles operations involving users.
+   * Service that handles operations involving models.
    */
   var ModuleService = {};
 
