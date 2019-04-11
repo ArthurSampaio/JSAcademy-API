@@ -5,32 +5,32 @@
   var _ = require('../util/util');
 
 
-  var ModuleService = require('../service/moduleService');
+  var ExerciseService = require('../service/exerciseService');
 
   /**
    * Router used to access the user entity.
    * URL: /api/user
    */
-  var moduleRouter = express.Router();
+  var exerciseRouter = express.Router();
 
-  moduleRouter.get(['', '/'], function (req, res) {
-    return ModuleService.getModules().then(function (response) {
+  exerciseRouter.get(['', '/'], function (req, res) {
+    return ExerciseService.getExercises().then(function (response) {
       return res.status(_.OK).json(response);
     }).catch(function (error) {
       return res.status(error.status || _.BAD_REQUEST).json(error.message || error);
     });
   });
 
-  moduleRouter.get('/:moduleId', function (req, res) {
-    return ModuleService.getModule(req.params.moduleId).then(function (response) {
+  exerciseRouter.get('/:exerciseId', function (req, res) {
+    return ExerciseService.getExercises(req.params.exerciseId).then(function (response) {
       return res.status(_.OK).json(response);
     }).catch(function (error) {
       return res.status(error.status || _.BAD_REQUEST).json(error.message || error);
     });
   });
 
-  moduleRouter.post(['', '/'], function (req, res) {
-    return ModuleService.createModule(req.body)
+  exerciseRouter.post(['', '/'], function (req, res) {
+    return ExerciseService.createExercises(req.body)
       .then(function (response) {
         return res.status(_.CREATED).json(response);
       })
@@ -39,9 +39,5 @@
       });
   });
 
-
-
-
-
-  module.exports = moduleRouter;
+  module.exports = exerciseRouter;
 })();
