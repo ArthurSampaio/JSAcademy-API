@@ -25,4 +25,4 @@ This API was build using the MEAN Stack and the API Rest concept to build our bu
 
 Resources to query and manipulate the entities of JS Academy server are describe in this content. Each resources has a set of actions(endpoints) and describe them individual with their constraints and responses.
 
-- [User:](/api/user.md) `/api/user'`
+- [User:](resources/User.md) `/api/user'`
