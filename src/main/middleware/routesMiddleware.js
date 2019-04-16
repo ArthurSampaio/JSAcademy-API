@@ -9,7 +9,7 @@
     //var teamRouter = require('../router/teamRouter');
     var moduleRouter = require('../router/moduleRouter');
     var exerciseRouter = require('../router/exerciseRouter');
-
+    var lessonRouter = require('../router/lessonRouter');
 
     var routesMiddleware = {};
 
@@ -22,6 +22,7 @@
         app.use('/api/user', userRouter);
         app.use('/api/module', moduleRouter);
         app.use('/api/exercise', exerciseRouter);
+        app.use('/api/lesson', lessonRouter);
         // app.use('/api/organization', passport.authenticate('jwt', { session: false }), organizationRouter);
         // teamRouter.use('/:teamId/backlog', backlogRouter);
         // teamRouter.use('/:teamId/sprint', sprintRouter);
