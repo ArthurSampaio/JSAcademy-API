@@ -30,7 +30,9 @@
       _id: lessonId
     };
 
-    var rawLesson = Lesson.findOne(params).exec();
+    var rawLesson = Lesson.findOne(params)
+      .populate('exercises')
+      .exec();
     return rawLesson.then(function (exc) {
       if (!exc) {
         throw Error("There's no exercise with the given ID: " + lessonId);
