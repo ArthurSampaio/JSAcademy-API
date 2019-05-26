@@ -33,6 +33,7 @@
 
     if (!userId) {
       const anonymous = await UserService.createAnonymousUser()
+      console.log('>>>>Anon', anonymous)
     }
 
     var rawLesson = Lesson.findOne(params)
