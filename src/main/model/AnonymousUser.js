@@ -6,10 +6,12 @@
 
   var AnonymousUserSchema = new Schema(
     {
-      answeredLesson: {
-        type: Schema.Types.ObjectId,
-        ref: 'MetricsLesson',
-      },
+      answeredLesson: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'MetricsLesson',
+        },
+      ],
     },
     {
       timestamps: true,
