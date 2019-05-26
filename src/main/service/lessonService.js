@@ -1,53 +1,55 @@
-(function () {
-  'use strict';
+;(function() {
+  'use strict'
 
-  var mongoose = require('mongoose');
-  var _ = require('../util/util');
-  var Lesson = mongoose.model('Lesson');
+  var mongoose = require('mongoose')
+  var _ = require('../util/util')
+  var Lesson = mongoose.model('Lesson')
 
   /**
    * Service that handles operations involving exercises.
    */
-  var LessonService = {};
+  var LessonService = {}
 
+  LessonService.getLessons = function(raw) {
+    var rawLessons = Lesson.find({}).exec()
 
-  LessonService.getLessons = function (raw) {
-    var rawLessons = Lesson.find({}).exec();
-
-    return rawLessons.then(function (lesson) {
+    return rawLessons.then(function(lesson) {
       if (!lesson) {
-        throw Error("No exercise founded.");
+        throw Error('No exercise founded.')
       }
-      return raw ?
-        rawLessons : _.map(lesson, function (e) {
-          return e.toObject();
-        })
-    });
-  };
+      return raw
+        ? rawLessons
+        : _.map(lesson, function(e) {
+            return e.toObject()
+          })
+    })
+  }
 
-  LessonService.getLesson = function (lessonId, raw) {
+  LessonService.getLesson = function(lessonId, userId, raw) {
     var params = {
-      _id: lessonId
-    };
+      _id: lessonId,
+    }
+
+    if (!userId) {
+      //create the anonymousUser
+    }
 
     var rawLesson = Lesson.findOne(params)
       .populate('exercises')
-      .exec();
-    return rawLesson.then(function (exc) {
+      .exec()
+    return rawLesson.then(function(exc) {
       if (!exc) {
-        throw Error("There's no exercise with the given ID: " + lessonId);
+        throw Error("There's no exercise with the given ID: " + lessonId)
       }
-      return raw ? rawLesson : exc.toObject();
-    });
-  };
+      return raw ? rawLesson : exc.toObject()
+    })
+  }
 
-  LessonService.createLesson = function (lessonData) {
+  LessonService.createLesson = function(lessonData) {
+    return new Lesson(lessonData).save().then(function(saved) {
+      return saved.toObject()
+    })
+  }
 
-    return new Lesson(lessonData).save().then(function (saved) {
-      return saved.toObject();
-    });
-  };
-
-
-  module.exports = LessonService;
-})();
+  module.exports = LessonService
+})()

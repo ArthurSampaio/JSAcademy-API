@@ -28,9 +28,10 @@
 
   lessonRouter.get('/:exerciseId', jwtMiddleware, function(req, res) {
     console.log('>>>>>>>>>>>>>>>>>>>>>a', req.user)
-
-    return LessonService.getLesson(req.params.exerciseId)
+    const userId = (req.user && req.user._id) || req.user
+    return LessonService.getLesson(req.params.exerciseId, userId)
       .then(function(response) {
+        res.setHeader('Teste', 'aaaaa') //works fine
         return res.status(_.OK).json(response)
       })
       .catch(function(error) {
