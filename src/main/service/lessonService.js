@@ -4,6 +4,7 @@
   var mongoose = require('mongoose')
   var _ = require('../util/util')
   var Lesson = mongoose.model('Lesson')
+  var UserService = require('./userService')
 
   /**
    * Service that handles operations involving exercises.
@@ -25,13 +26,13 @@
     })
   }
 
-  LessonService.getLesson = function(lessonId, userId, raw) {
+  LessonService.getLesson = async function(lessonId, userId, raw) {
     var params = {
       _id: lessonId,
     }
 
     if (!userId) {
-      //create the anonymousUser
+      const anonymous = await UserService.createAnonymousUser()
     }
 
     var rawLesson = Lesson.findOne(params)
