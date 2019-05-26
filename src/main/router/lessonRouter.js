@@ -7,6 +7,7 @@
   var jwtMiddleware = require('../middleware/jwtMiddleware')
 
   var LessonService = require('../service/lessonService')
+  var UserService = require('../service/userService')
 
   /**
    * Router used to access the Exercise entity.
@@ -26,12 +27,19 @@
       })
   })
 
-  lessonRouter.get('/:exerciseId', jwtMiddleware, function(req, res) {
+  lessonRouter.get('/:exerciseId', jwtMiddleware, async function(req, res) {
     console.log('>>>>>>>>>>>>>>>>>>>>>a', req.user)
     const userId = (req.user && req.user._id) || req.user
-    return LessonService.getLesson(req.params.exerciseId, userId)
+    let anonymous
+    if (!userId) {
+      anonymous = await UserService.createAnonymousUser()
+    }
+
+    return LessonService.getLessonToStudy(req.params.exerciseId, userId)
       .then(function(response) {
-        res.setHeader('Teste', 'aaaaa') //works fine
+        if (anonymous) {
+          res.setHeader('anonymous-id', anonymous._id) //works fine
+        }
         return res.status(_.OK).json(response)
       })
       .catch(function(error) {

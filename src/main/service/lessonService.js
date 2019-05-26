@@ -26,14 +26,32 @@
     })
   }
 
-  LessonService.getLesson = async function(lessonId, userId, raw) {
+  LessonService.getLessonToStudy = async function(lessonId, raw) {
+    var lesson = await LessonService.getLesson(lessonId)
+    lesson.viewed = lesson.viewed + 1
+    console.log('AAAA', lesson)
+    return LessonService.update(lessonId, lesson)
+  }
+
+  LessonService.createLesson = function(lessonData) {
+    return new Lesson(lessonData).save().then(function(saved) {
+      return saved.toObject()
+    })
+  }
+
+  LessonService.update = function(lessonId, lesson) {
+    return LessonService.getLesson(lessonId, true).then(function(lessonDb) {
+      _.copyModel(lessonDb, lesson)
+
+      return lessonDb.save().then(function(persistedLesson) {
+        return persistedLesson.toObject()
+      })
+    })
+  }
+
+  LessonService.getLesson = function(lessonId, raw) {
     var params = {
       _id: lessonId,
-    }
-
-    if (!userId) {
-      const anonymous = await UserService.createAnonymousUser()
-      console.log('>>>>Anon', anonymous)
     }
 
     var rawLesson = Lesson.findOne(params)
@@ -44,12 +62,6 @@
         throw Error("There's no exercise with the given ID: " + lessonId)
       }
       return raw ? rawLesson : exc.toObject()
-    })
-  }
-
-  LessonService.createLesson = function(lessonData) {
-    return new Lesson(lessonData).save().then(function(saved) {
-      return saved.toObject()
     })
   }
 
