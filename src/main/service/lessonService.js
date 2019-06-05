@@ -29,7 +29,6 @@
   LessonService.getLessonToStudy = async function(lessonId, raw) {
     var lesson = await LessonService.getLesson(lessonId)
     lesson.viewed = lesson.viewed + 1
-    console.log('AAAA', lesson)
     return LessonService.update(lessonId, lesson)
   }
 
