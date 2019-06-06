@@ -4,7 +4,7 @@
   var mongoose = require('mongoose')
   var _ = require('../util/util')
   var Lesson = mongoose.model('Lesson')
-  var UserService = require('./userService')
+  var MetricsLesson = mongoose.model('MetricsLesson')
 
   /**
    * Service that handles operations involving exercises.
@@ -61,6 +61,41 @@
         throw Error("There's no exercise with the given ID: " + lessonId)
       }
       return raw ? rawLesson : exc.toObject()
+    })
+  }
+
+  LessonService.getMetricById = function(metricsId, raw) {
+    var params = {
+      _id: metricsId,
+    }
+
+    var rawMetrics = MetricsLesson.findOne(params).exec()
+    return rawMetrics.then(function(exc) {
+      if (!exc) {
+        throw Error("There's no exercise with the given ID: " + metricsId)
+      }
+      return raw ? rawMetrics : exc.toObject()
+    })
+  }
+
+  LessonService.getMetrics = function(raw) {
+    var rawLessons = MetricsLesson.find({}).exec()
+
+    return rawLessons.then(function(lesson) {
+      if (!lesson) {
+        throw Error('No metrics founded.')
+      }
+      return raw
+        ? rawLessons
+        : _.map(lesson, function(e) {
+            return e.toObject()
+          })
+    })
+  }
+
+  LessonService.createMetricsLesson = function(metricsData) {
+    return new MetricsLesson(metricsData).save().then(function(saved) {
+      return saved.toObject()
     })
   }
 

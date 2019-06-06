@@ -49,6 +49,18 @@
       })
   })
 
+  lessonRouter.post('/send', function(req, res) {
+    return LessonService.createMetricsLesson(req.body)
+      .then(function(response) {
+        return res.status(_.CREATED).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
+
   lessonRouter.post(['', '/'], function(req, res) {
     return LessonService.createLesson(req.body)
       .then(function(response) {
