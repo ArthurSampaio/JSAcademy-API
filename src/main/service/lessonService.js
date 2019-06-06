@@ -75,25 +75,21 @@
     console.log('::::::::::::::::', metricObj)
 
     return LessonService.saveMetricsLesson(metricObj).then(function(metric) {
-      return UserService.getUser(userId)
-        .then(function(user) {
-          console.log('metrics >>>>>>>>>>>', metric)
-
-          user.answeredLesson.push(metric._id)
-
-          console.log(':>>>>>>>>>>> 1 then', user)
-
-          return user
-        })
-        .then(function(user) {
-          console.log(':>>>>>>>>>>>', user)
-
-          return UserService.updateUser(user._id, user).then(function(user) {
-            console.log('metric', metric)
-            return metric
-          })
-        })
+      return LessonService.linkingMetricToUser(metric, userId)
     })
+  }
+
+  LessonService.linkingMetricToUser = function(metric, userId) {
+    return UserService.getUser(userId)
+      .then(function(user) {
+        user.answeredLesson.push(metric._id)
+        return user
+      })
+      .then(function(user) {
+        return UserService.updateUser(user._id, user).then(function(user) {
+          return metric
+        })
+      })
   }
 
   function metricDataToObj(metricData, userId) {
