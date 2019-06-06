@@ -27,6 +27,18 @@
       })
   })
 
+  lessonRouter.get('/metrics', function(req, res) {
+    return LessonService.getMetrics()
+      .then(function(response) {
+        return res.status(_.OK).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
+
   lessonRouter.get('/:exerciseId', jwtMiddleware, async function(req, res) {
     console.log('>>>>>>>>>>>>>>>>>>>>>a', req.user)
     const userId = (req.user && req.user._id) || req.user
@@ -50,6 +62,7 @@
   })
 
   lessonRouter.post('/send', function(req, res) {
+    console.log('>>>>>>>>>>>>>>>>>>', req.body)
     return LessonService.createMetricsLesson(req.body)
       .then(function(response) {
         return res.status(_.CREATED).json(response)
