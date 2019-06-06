@@ -96,6 +96,30 @@
     })
   }
 
+  UserService.getAnonymousUser = async function(userId, raw) {
+    var params = {
+      _id: userId,
+    }
+    var rawUser = AnonymousUser.findOne(params).exec()
+
+    return rawUser.then(function(user) {
+      if (!user) {
+        throw Error('Nenhum usuário anônimo com id ' + userId + ' encontrado.')
+      }
+      return raw ? rawUser : user.toObject()
+    })
+  }
+
+  UserService.updateAnonymousUser = async function(userId, user) {
+    return UserService.getAnonymousUser(userId, true).then(function(userDb) {
+      _.copyModel(userDb, user)
+
+      return userDb.save().then(function(persistedUser) {
+        return persistedUser.toObject()
+      })
+    })
+  }
+
   /**
    * Update an existing user.
    *

@@ -11,6 +11,9 @@
         type: Schema.Types.ObjectId,
         ref: 'Lesson',
       },
+      userId: {
+        type: String,
+      },
       totalTime: {
         type: Number,
       },

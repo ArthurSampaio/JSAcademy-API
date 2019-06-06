@@ -5,6 +5,7 @@
   var _ = require('../util/util')
   var Lesson = mongoose.model('Lesson')
   var MetricsLesson = mongoose.model('MetricsLesson')
+  var UserService = require('./userService')
 
   /**
    * Service that handles operations involving exercises.
@@ -48,7 +49,7 @@
     })
   }
 
-  LessonService.getLesson = function(lessonId, raw) {
+  LessonService.getLesson = async function(lessonId, raw) {
     var params = {
       _id: lessonId,
     }
@@ -61,6 +62,55 @@
         throw Error("There's no exercise with the given ID: " + lessonId)
       }
       return raw ? rawLesson : exc.toObject()
+    })
+  }
+
+  LessonService.createMetricsLesson = async function(
+    metricsData,
+    userId,
+    isAnonymous
+  ) {
+    const lesson = await LessonService.getLesson(metricsData.lesson)
+    const metricObj = metricDataToObj(metricsData, userId)
+    console.log('::::::::::::::::', metricObj)
+
+    return LessonService.saveMetricsLesson(metricObj).then(function(metric) {
+      return UserService.getUser(userId)
+        .then(function(user) {
+          console.log('metrics >>>>>>>>>>>', metric)
+
+          user.answeredLesson.push(metric._id)
+
+          console.log(':>>>>>>>>>>> 1 then', user)
+
+          return user
+        })
+        .then(function(user) {
+          console.log(':>>>>>>>>>>>', user)
+
+          return UserService.updateUser(user._id, user).then(function(user) {
+            console.log('metric', metric)
+            return metric
+          })
+        })
+    })
+  }
+
+  function metricDataToObj(metricData, userId) {
+    const totalTime = metricData.exercisesMetrics.reduce(
+      (acc, val) => (acc = acc + val.time),
+      0
+    )
+    return {
+      ...metricData,
+      totalTime: totalTime,
+      userId: userId,
+    }
+  }
+
+  LessonService.saveMetricsLesson = function(metricsData) {
+    return new MetricsLesson(metricsData).save().then(function(saved) {
+      return saved.toObject()
     })
   }
 
@@ -90,12 +140,6 @@
         : _.map(lesson, function(e) {
             return e.toObject()
           })
-    })
-  }
-
-  LessonService.createMetricsLesson = function(metricsData) {
-    return new MetricsLesson(metricsData).save().then(function(saved) {
-      return saved.toObject()
     })
   }
 

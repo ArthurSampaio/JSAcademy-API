@@ -61,9 +61,11 @@
       })
   })
 
-  lessonRouter.post('/send', function(req, res) {
-    console.log('>>>>>>>>>>>>>>>>>>', req.body)
-    return LessonService.createMetricsLesson(req.body)
+  lessonRouter.post('/send', jwtMiddleware, function(req, res) {
+    //TODO: logica para pegar se o anonymousId se o req.user for null (nao autenticado)
+    const userId = (req.user && req.user._id) || req.user
+    const isAnonymous = false
+    return LessonService.createMetricsLesson(req.body, userId, isAnonymous)
       .then(function(response) {
         return res.status(_.CREATED).json(response)
       })
@@ -72,19 +74,18 @@
           .status(error.status || _.BAD_REQUEST)
           .json(error.message || error)
       })
-  })
-
-  lessonRouter.post(['', '/'], function(req, res) {
-    return LessonService.createLesson(req.body)
-      .then(function(response) {
-        return res.status(_.CREATED).json(response)
-      })
-      .catch(function(error) {
-        return res
-          .status(error.status || _.BAD_REQUEST)
-          .json(error.message || error)
-      })
-  })
+  }),
+    lessonRouter.post(['', '/'], function(req, res) {
+      return LessonService.createLesson(req.body)
+        .then(function(response) {
+          return res.status(_.CREATED).json(response)
+        })
+        .catch(function(error) {
+          return res
+            .status(error.status || _.BAD_REQUEST)
+            .json(error.message || error)
+        })
+    })
 
   module.exports = lessonRouter
 })()
