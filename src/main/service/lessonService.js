@@ -75,7 +75,7 @@
     console.log('::::::::::::::::', metricObj)
 
     return LessonService.saveMetricsLesson(metricObj).then(function(metric) {
-      return LessonService.linkingMetricToUser(metric, userId)
+      if (!isAnonymous) return LessonService.linkingMetricToUser(metric, userId)
     })
   }
 
@@ -115,7 +115,10 @@
       _id: metricsId,
     }
 
-    var rawMetrics = MetricsLesson.findOne(params).exec()
+    var rawMetrics = MetricsLesson.findOne(params)
+      .populate('exercisesMetrics.exercise')
+      .populate('lesson')
+      .exec()
     return rawMetrics.then(function(exc) {
       if (!exc) {
         throw Error("There's no exercise with the given ID: " + metricsId)

@@ -39,6 +39,23 @@
       })
   })
 
+  lessonRouter.get('/metrics/:metricsId', jwtMiddleware, async function(
+    req,
+    res
+  ) {
+    console.log('>>>>>>>>>>>>>>>>>>>>>a', req.params.metricsId)
+
+    return LessonService.getMetricById(req.params.metricsId)
+      .then(function(response) {
+        return res.status(_.OK).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
+
   lessonRouter.get('/:exerciseId', jwtMiddleware, async function(req, res) {
     console.log('>>>>>>>>>>>>>>>>>>>>>a', req.user)
     const userId = (req.user && req.user._id) || req.user
