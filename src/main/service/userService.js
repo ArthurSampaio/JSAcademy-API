@@ -45,7 +45,11 @@
     var params = {
       _id: userId,
     }
-    var rawUser = User.findOne(params).exec()
+    var rawUser = User.findOne(params)
+      .populate('answeredLesson')
+      .populate({ path: 'answeredLesson', populate: { path: 'lesson' } })
+
+      .exec()
 
     return rawUser.then(function(user) {
       if (!user) {
