@@ -65,14 +65,21 @@
     })
   }
 
+  LessonService.improveAnsweredInLesson = async function(lessonId) {
+    const lesson = await LessonService.getLesson(lessonId)
+    lesson.answered = lesson.answered + 1
+    return LessonService.update(lessonId, lesson)
+  }
+
   LessonService.createMetricsLesson = async function(
     metricsData,
     userId,
     isAnonymous
   ) {
-    const lesson = await LessonService.getLesson(metricsData.lesson)
+    const lesson = await LessonService.improveAnsweredInLesson(
+      metricsData.lesson
+    )
     const metricObj = metricDataToObj(metricsData, userId)
-    console.log('::::::::::::::::', metricObj)
 
     return LessonService.saveMetricsLesson(metricObj).then(function(metric) {
       if (!isAnonymous) return LessonService.linkingMetricToUser(metric, userId)
