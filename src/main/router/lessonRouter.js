@@ -15,17 +15,49 @@
    */
   var lessonRouter = express.Router()
 
-  lessonRouter.get(['', '/'], function(req, res) {
+  lessonRouter.get(['', '/'], jwtMiddleware, function(req, res) {
+    const userId = (req.user && req.user._id) || req.user
+
     return LessonService.getLessons()
       .then(function(response) {
         return res.status(_.OK).json(response)
       })
       .catch(function(error) {
-        return res
+        return error
           .status(error.status || _.BAD_REQUEST)
           .json(error.message || error)
       })
   })
+
+  lessonRouter.get('/user', jwtMiddleware, function(req, res) {
+    const userId = (req.user && req.user._id) || req.user
+
+    return LessonService.getLessonForUser(userId)
+      .then(function(response) {
+        return res.status(_.OK).json(response)
+      })
+      .catch(function(error) {
+        return (
+          error &&
+          error
+            .status(error.status || _.BAD_REQUEST)
+            .json(error.message || error)
+        )
+      })
+  })
+
+  function getLessons(cb) {
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<, cb', cb.toString())
+    return cb
+      .then(function(response) {
+        return res.status(_.OK).json(response)
+      })
+      .catch(function(error) {
+        return error
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  }
 
   lessonRouter.get('/metrics', function(req, res) {
     return LessonService.getMetrics()

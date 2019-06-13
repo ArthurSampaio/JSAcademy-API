@@ -32,6 +32,11 @@
         type: Number,
         default: 0,
       },
+      owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
     },
     {
       timestamps: true,
