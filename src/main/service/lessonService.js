@@ -54,19 +54,10 @@
     const answeredLesson = user.answeredLesson.map(
       answer => answer.lesson && answer.lesson._id.toString()
     )
-    console.log('>11111111111111111111111111>>', answeredLesson)
-
     const lessons = await LessonService.getLessons()
-
     const filteredLessons = lessons.filter(lesson => {
-      console.log(
-        'Lesonsr',
-        lesson._id.toString() === '5cc34f366fa1ae44102f7605'
-      )
-      console.log('includes', answeredLesson)
       return !answeredLesson.includes(lesson._id.toString())
     })
-    console.log('>>>>>>>>>>>>>>>> filtered', filteredLessons)
     return filteredLessons
   }
 

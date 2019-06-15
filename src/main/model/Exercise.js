@@ -18,6 +18,11 @@
         type: String,
         default: `function xpto(...args){  }`,
       },
+      owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
       testCases: [
         {
           input: {
@@ -26,7 +31,6 @@
           output: {
             type: String,
           },
-          default: [],
         },
       ],
     },
