@@ -123,18 +123,31 @@
           .status(error.status || _.BAD_REQUEST)
           .json(error.message || error)
       })
-  }),
-    lessonRouter.post(['', '/'], function(req, res) {
-      return LessonService.createLesson(req.body)
-        .then(function(response) {
-          return res.status(_.CREATED).json(response)
-        })
-        .catch(function(error) {
-          return res
-            .status(error.status || _.BAD_REQUEST)
-            .json(error.message || error)
-        })
-    })
+  })
+
+  lessonRouter.post(['', '/'], function(req, res) {
+    return LessonService.createLesson(req.body)
+      .then(function(response) {
+        return res.status(_.CREATED).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
+
+  lessonRouter.put('/:lessonId', function(req, res) {
+    return LessonService.update(req.params.lessonId, req.body)
+      .then(function(response) {
+        return res.status(_.CREATED).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
 
   module.exports = lessonRouter
 })()

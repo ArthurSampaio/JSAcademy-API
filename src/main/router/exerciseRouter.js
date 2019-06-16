@@ -48,7 +48,7 @@
       })
   })
 
-  exerciseRouter.put('/exerciseId', function(req, res) {
+  exerciseRouter.put('/:exerciseId', function(req, res) {
     return ExerciseService.update(req.params.exerciseId, req.body)
       .then(function(response) {
         return res.status(_.OK).json(response)
