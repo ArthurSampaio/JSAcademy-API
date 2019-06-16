@@ -48,5 +48,17 @@
       })
   })
 
+  exerciseRouter.put('/exerciseId', function(req, res) {
+    return ExerciseService.update(req.params.exerciseId, req.body)
+      .then(function(response) {
+        return res.status(_.OK).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
+
   module.exports = exerciseRouter
 })()
