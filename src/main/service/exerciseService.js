@@ -46,7 +46,9 @@
   }
 
   ExerciseService.update = function(exerciseId, exercise) {
-    return Exercise.getExercise(exerciseId).then(function(exerciseDb) {
+    return ExerciseService.getExercise(exerciseId, true).then(function(
+      exerciseDb
+    ) {
       _.copyModel(exerciseDb, exercise)
       return exerciseDb.save().then(function(persistedExercise) {
         return persistedExercise.toObject()
