@@ -33,8 +33,12 @@
     return LessonService.update(lessonId, lesson)
   }
 
-  LessonService.createLesson = function(lessonData) {
-    return new Lesson(lessonData).save().then(function(saved) {
+  LessonService.createLesson = function(lessonData, userId) {
+    const lesson = {
+      ...lessonData,
+      owner: userId,
+    }
+    return new Lesson(lesson).save().then(function(saved) {
       return saved.toObject()
     })
   }
@@ -71,9 +75,27 @@
       .exec()
     return rawLesson.then(function(exc) {
       if (!exc) {
-        throw Error("There's no exercise with the given ID: " + lessonId)
+        throw Error("There's no lesson with the given ID: " + lessonId)
       }
       return raw ? rawLesson : exc.toObject()
+    })
+  }
+
+  LessonService.getLessonsByUserId = async function(userId, raw) {
+    var params = {
+      owner: userId,
+    }
+    var rawLessons = Lesson.find(params).exec()
+
+    return rawLessons.then(function(lesson) {
+      if (!lesson) {
+        throw Error("There's no lesson with the given UserId: " + userId)
+      }
+      return raw
+        ? rawLessons
+        : _.map(lesson, function(e) {
+            return e.toObject()
+          })
     })
   }
 

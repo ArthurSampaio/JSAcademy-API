@@ -59,6 +59,20 @@
       })
   }
 
+  lessonRouter.get('/my', jwtMiddleware, async function(req, res) {
+    const userId = (req.user && req.user._id) || req.user
+
+    return LessonService.getLessonsByUserId(userId)
+      .then(function(response) {
+        return res.status(_.OK).json(response)
+      })
+      .catch(function(error) {
+        return res
+          .status(error.status || _.BAD_REQUEST)
+          .json(error.message || error)
+      })
+  })
+
   lessonRouter.get('/metrics', function(req, res) {
     return LessonService.getMetrics()
       .then(function(response) {
@@ -125,8 +139,10 @@
       })
   })
 
-  lessonRouter.post(['', '/'], function(req, res) {
-    return LessonService.createLesson(req.body)
+  lessonRouter.post(['', '/'], jwtMiddleware, function(req, res) {
+    const userId = (req.user && req.user._id) || req.user
+
+    return LessonService.createLesson(req.body, userId)
       .then(function(response) {
         return res.status(_.CREATED).json(response)
       })
