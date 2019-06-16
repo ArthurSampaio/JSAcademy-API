@@ -53,7 +53,7 @@
     })
   }
 
-  LessonService.getLessonForUser = async function(userId, raw) {
+  LessonService.getLessonForStudy = async function(userId, raw) {
     const user = await UserService.getUser(userId)
     const answeredLesson = user.answeredLesson.map(
       answer => answer.lesson && answer.lesson._id.toString()
@@ -168,8 +168,14 @@
     })
   }
 
-  LessonService.getMetrics = function(raw) {
-    var rawLessons = MetricsLesson.find({}).exec()
+  LessonService.getMetrics = function(lessonId, raw) {
+    var params = lessonId
+      ? {
+          lesson: lessonId,
+        }
+      : {}
+
+    var rawLessons = MetricsLesson.find(params).exec()
 
     return rawLessons.then(function(lesson) {
       if (!lesson) {

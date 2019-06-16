@@ -29,10 +29,10 @@
       })
   })
 
-  lessonRouter.get('/user', jwtMiddleware, function(req, res) {
+  lessonRouter.get('/study', jwtMiddleware, function(req, res) {
     const userId = (req.user && req.user._id) || req.user
 
-    return LessonService.getLessonForUser(userId)
+    return LessonService.getLessonForStudy(userId)
       .then(function(response) {
         return res.status(_.OK).json(response)
       })
@@ -74,7 +74,9 @@
   })
 
   lessonRouter.get('/metrics', function(req, res) {
-    return LessonService.getMetrics()
+    const lessonId = req.query.lessonId
+    console.log('!!!!!!!!!!!!!!!!!!!!,id', lessonId)
+    return LessonService.getMetrics(lessonId)
       .then(function(response) {
         return res.status(_.OK).json(response)
       })
