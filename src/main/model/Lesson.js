@@ -14,10 +14,6 @@
         type: Number,
         default: 0,
       },
-      module: {
-        type: Schema.Types.ObjectId,
-        ref: 'Module',
-      },
       exercises: [
         {
           type: Schema.Types.ObjectId,

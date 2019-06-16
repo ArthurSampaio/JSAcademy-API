@@ -16,7 +16,7 @@
       },
       appraisedFunction: {
         type: String,
-        default: `function xpto(...args){  }`,
+        default: `function xpto(args){  }`,
       },
       owner: {
         type: Schema.Types.ObjectId,
