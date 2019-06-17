@@ -64,8 +64,12 @@
       answer => answer.lesson && answer.lesson._id.toString()
     )
     const lessons = await LessonService.getLessons()
+
     const filteredLessons = lessons.filter(lesson => {
-      return !answeredLesson.includes(lesson._id.toString())
+      return !(
+        answeredLesson.includes(lesson._id.toString()) ||
+        (lesson.owner && lesson.owner.equals(userId))
+      )
     })
     return filteredLessons
   }
@@ -92,6 +96,7 @@
     }
     var rawLessons = Lesson.find(params)
       .sort({ createdAt: -1 })
+      .populate('exercises')
       .exec()
 
     return rawLessons.then(function(lesson) {

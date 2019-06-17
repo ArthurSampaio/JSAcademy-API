@@ -39,8 +39,12 @@
     })
   }
 
-  ExerciseService.createExercises = function(exercisesData) {
-    return new Exercise(exercisesData).save().then(function(saved) {
+  ExerciseService.createExercises = function(exercisesData, userId) {
+    const exercise = {
+      ...exercisesData,
+      owner: userId,
+    }
+    return new Exercise(exercise).save().then(function(saved) {
       return saved.toObject()
     })
   }
