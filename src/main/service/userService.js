@@ -162,6 +162,19 @@
       })
   }
 
+  UserService.linkingMetricToUser = function(metric, userId) {
+    return UserService.getUser(userId)
+      .then(function(user) {
+        user.answeredLesson.push(metric._id)
+        return user
+      })
+      .then(function(user) {
+        return UserService.updateUser(user._id, user).then(function(user) {
+          return metric
+        })
+      })
+  }
+
   /**
    * Searches for a user with the given parameters.
    *

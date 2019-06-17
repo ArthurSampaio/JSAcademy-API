@@ -13,7 +13,9 @@
   var LessonService = {}
 
   LessonService.getLessons = function(raw) {
-    var rawLessons = Lesson.find({}).exec()
+    var rawLessons = Lesson.find({})
+      .sort({ createdAt: -1 })
+      .exec()
 
     return rawLessons.then(function(lesson) {
       if (!lesson) {
@@ -54,6 +56,9 @@
   }
 
   LessonService.getLessonForStudy = async function(userId, raw) {
+    if (!userId) {
+      return LessonService.getLessons()
+    }
     const user = await UserService.getUser(userId)
     const answeredLesson = user.answeredLesson.map(
       answer => answer.lesson && answer.lesson._id.toString()
@@ -85,7 +90,9 @@
     var params = {
       owner: userId,
     }
-    var rawLessons = Lesson.find(params).exec()
+    var rawLessons = Lesson.find(params)
+      .sort({ createdAt: -1 })
+      .exec()
 
     return rawLessons.then(function(lesson) {
       if (!lesson) {
@@ -113,7 +120,7 @@
     const lesson = await LessonService.improveAnsweredInLesson(
       metricsData.lesson
     )
-    const metricObj = metricDataToObj(metricsData, userId)
+    const metricObj = metricDataToObj(metricsData, userId, isAnonymous)
 
     return LessonService.saveMetricsLesson(metricObj).then(function(metric) {
       if (!isAnonymous) return LessonService.linkingMetricToUser(metric, userId)
@@ -121,28 +128,20 @@
   }
 
   LessonService.linkingMetricToUser = function(metric, userId) {
-    return UserService.getUser(userId)
-      .then(function(user) {
-        user.answeredLesson.push(metric._id)
-        return user
-      })
-      .then(function(user) {
-        return UserService.updateUser(user._id, user).then(function(user) {
-          return metric
-        })
-      })
+    return UserService.linkingMetricToUser(metric, userId)
   }
 
-  function metricDataToObj(metricData, userId) {
+  function metricDataToObj(metricData, userId, isAnonymous) {
     const totalTime = metricData.exercisesMetrics.reduce(
       (acc, val) => (acc = acc + val.time),
       0
     )
-    return {
+    const baseObj = {
       ...metricData,
       totalTime: totalTime,
       userId: userId,
     }
+    return isAnonymous ? baseObj : { ...baseObj, owner: userId }
   }
 
   LessonService.saveMetricsLesson = function(metricsData) {
@@ -175,7 +174,10 @@
         }
       : {}
 
-    var rawLessons = MetricsLesson.find(params).exec()
+    var rawLessons = MetricsLesson.find(params)
+      .sort({ createdAt: -1 })
+      .populate('owner')
+      .exec()
 
     return rawLessons.then(function(lesson) {
       if (!lesson) {

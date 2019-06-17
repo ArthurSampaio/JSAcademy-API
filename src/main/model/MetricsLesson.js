@@ -14,6 +14,12 @@
       userId: {
         type: String,
       },
+      owner: {
+        //who answered
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
       totalTime: {
         type: Number,
       },
