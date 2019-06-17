@@ -96,6 +96,7 @@
     }
     var rawLessons = Lesson.find(params)
       .sort({ createdAt: -1 })
+      .populate('exercises')
       .exec()
 
     return rawLessons.then(function(lesson) {
