@@ -47,7 +47,6 @@
   })
 
   function getLessons(cb) {
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<, cb', cb.toString())
     return cb
       .then(function(response) {
         return res.status(_.OK).json(response)
@@ -75,7 +74,6 @@
 
   lessonRouter.get('/metrics', function(req, res) {
     const lessonId = req.query.lessonId
-    console.log('!!!!!!!!!!!!!!!!!!!!,id', lessonId)
     return LessonService.getMetrics(lessonId)
       .then(function(response) {
         return res.status(_.OK).json(response)
@@ -91,8 +89,6 @@
     req,
     res
   ) {
-    console.log('>>>>>>>>>>>>>>>>>>>>>a', req.params.metricsId)
-
     return LessonService.getMetricById(req.params.metricsId)
       .then(function(response) {
         return res.status(_.OK).json(response)
@@ -105,7 +101,6 @@
   })
 
   lessonRouter.get('/:exerciseId', jwtMiddleware, async function(req, res) {
-    console.log('>>>>>>>>>>>>>>>>>>>>>a', req.user)
     const userId = (req.user && req.user._id) || req.user
     let anonymous
     if (!userId) {
