@@ -129,6 +129,7 @@
 
     return LessonService.saveMetricsLesson(metricObj).then(function(metric) {
       if (!isAnonymous) return LessonService.linkingMetricToUser(metric, userId)
+      else return metric
     })
   }
 

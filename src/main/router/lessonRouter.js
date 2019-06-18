@@ -124,7 +124,11 @@
   lessonRouter.post('/send', jwtMiddleware, function(req, res) {
     //TODO: logica para pegar se o anonymousId se o req.user for null (nao autenticado)
     const userId = (req.user && req.user._id) || req.user
-    const isAnonymous = false
+    let isAnonymous = false
+
+    if (!userId) {
+      isAnonymous = true
+    }
     return LessonService.createMetricsLesson(req.body, userId, isAnonymous)
       .then(function(response) {
         return res.status(_.CREATED).json(response)
