@@ -1,6 +1,6 @@
-# JS School
+# Javascript Academy
 
-![JS Academy](images/jsacademy.png)
+Javascript Academy is a web platform that you can create, share and answer lessons in javascript with automatic judge.
 
 ## Development
 

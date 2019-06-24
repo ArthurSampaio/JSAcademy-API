@@ -18,9 +18,9 @@
     var is_production = process.env.NODE_ENV === 'production';
 
     if (is_production) {
-        mongoose.connect(process.env.MONGODB_ADDRESS + '/LIBELULA');
+        mongoose.connect(process.env.MONGODB_ADDRESS + '/JSACADEMY');
     } else {
-        mongoose.connect('mongodb://127.0.0.1:27017/LIBELULA-TESTDB');
+        mongoose.connect('mongodb://127.0.0.1:27017/JSACADEMY-TEST');
         mongoose.set('debug', true);
 
         app.use(errorHandler());

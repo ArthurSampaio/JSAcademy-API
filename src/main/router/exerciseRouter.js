@@ -13,6 +13,10 @@
    */
   var exerciseRouter = express.Router()
 
+  /**
+   * GET api/exercise
+   * @returns {Promise} with the list of exercises
+   */
   exerciseRouter.get(['', '/'], function(req, res) {
     return ExerciseService.getExercises()
       .then(function(response) {
@@ -25,6 +29,11 @@
       })
   })
 
+  /**
+   * GET api/exercise/:exerciseId
+   * Get a exercise with the specific exerciseId
+   * @returns {Promise} with the exercise
+   */
   exerciseRouter.get('/:exerciseId', function(req, res) {
     return ExerciseService.getExercise(req.params.exerciseId)
       .then(function(response) {
@@ -37,6 +46,11 @@
       })
   })
 
+  /**
+   * POST api/exercise
+   * Create a new exercise
+   * @returns {Promise} Promise with the exercise created
+   */
   exerciseRouter.post(['', '/'], jwtMiddleware, function(req, res) {
     const userId = (req.user && req.user._id) || req.user
 
@@ -51,6 +65,11 @@
       })
   })
 
+  /**
+   * PUT api/exercise/:exerciseId
+   * Update an exercise
+   * @returns {Promise} Promise with the updated exercise
+   */
   exerciseRouter.put('/:exerciseId', function(req, res) {
     return ExerciseService.update(req.params.exerciseId, req.body)
       .then(function(response) {
