@@ -5,7 +5,6 @@
   var _ = require('../util/util')
 
   var UserService = require('../service/userService')
-  var TeamService = require('../service/teamService')
 
   /**
    * Router used to access the user entity.
@@ -63,24 +62,6 @@
       .catch(function(error) {
         return res
           .status(error.status || _.BAD_REQUEST)
-          .json(error.message || error)
-      })
-  })
-
-  /**
-   * GET /api/user/:userId/team.
-   * Get the teams to which a user belongs.
-   *
-   * @returns {Promise} Promise with the list of teams.
-   */
-  userRouter.get('/:userId/team', function(req, res) {
-    return TeamService.getTeamsFromUser(req.params.userId)
-      .then(function(response) {
-        return res.status(_.OK).json(response)
-      })
-      .catch(function(error) {
-        return res
-          .status(error.status || _.NOT_FOUND)
           .json(error.message || error)
       })
   })
